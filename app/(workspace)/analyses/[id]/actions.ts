@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@clerk/nextjs/server";
 import { createHash } from "node:crypto";
 import { tracingStatus, type TracingStatus } from "@/lib/ai/client";
 import { classifyFile, explainFile, explainFolder, type Cache } from "@/lib/ai/tasks";
@@ -30,6 +31,7 @@ type Db = Awaited<ReturnType<typeof createServerSupabase>>;
 type Analysis = { id: string; organizationId: string; commitSha: string; repository: { owner: string; name: string } };
 
 export async function explainFileAction(analysisId: string, path: string): Promise<ExplainResult> {
+  await auth.protect();
   try {
     const db = await createServerSupabase();
     const analysis = await readAnalysis(db, analysisId);
@@ -65,6 +67,7 @@ export async function explainFileAction(analysisId: string, path: string): Promi
 }
 
 export async function explainFolderAction(analysisId: string, dir: string): Promise<ExplainResult> {
+  await auth.protect();
   try {
     const db = await createServerSupabase();
     const analysis = await readAnalysis(db, analysisId);
@@ -80,6 +83,7 @@ export async function explainFolderAction(analysisId: string, dir: string): Prom
 
 // One GitHub API call; the pane asks once per page load, not once per file.
 export async function repositoryHeadAction(analysisId: string): Promise<HeadResult> {
+  await auth.protect();
   try {
     const analysis = await readAnalysis(await createServerSupabase(), analysisId);
     return { ok: true, head: await resolveHeadCommit(analysis.repository), analysed: analysis.commitSha };
@@ -91,6 +95,7 @@ export async function repositoryHeadAction(analysisId: string): Promise<HeadResu
 // Only asked once the repository has moved past the analysed commit: the
 // file's bytes at the new head, against the hash the parser stored.
 export async function fileAtHeadAction(analysisId: string, path: string, head: string): Promise<FileAtHead> {
+  await auth.protect();
   try {
     if (!/^[0-9a-f]{40}$/.test(head)) return { ok: false, error: "That isn't a commit" };
     const db = await createServerSupabase();

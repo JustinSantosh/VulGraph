@@ -1,9 +1,14 @@
-import { SignIn } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { AuthScreen } from "@/components/auth-screen";
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  const { userId, orgId } = await auth();
+  if (userId) redirect(orgId ? "/" : "/start");
+
   return (
     <div className="flex flex-1 items-center justify-center">
-      <SignIn />
+      <AuthScreen mode="sign-in" />
     </div>
   );
 }

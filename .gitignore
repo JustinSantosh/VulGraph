@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local editor and package-manager caches
+/.idea/
+/.pnpm-store/
+# pnpm is the canonical package manager for this repository.
+/package-lock.json

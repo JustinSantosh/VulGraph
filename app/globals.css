@@ -8,6 +8,9 @@
 :root {
   color-scheme: light dark;
 
+  --font-geist-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
   --canvas: light-dark(#fafafa, #0c0c0d);
   --surface: light-dark(#ffffff, #131315);
   --raised: light-dark(#f0f0f2, #1d1d20);

@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import type { ComponentProps } from "react";
 import { AnalysisHeader } from "@/components/analysis-header";
@@ -16,6 +17,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 // until then. The progress view refreshes this page when the last stage
 // lands, so a finished run turns into its map in place.
 export default async function AnalysisPage({ params }: PageProps<"/analyses/[id]">) {
+  await auth.protect();
   const { id } = await params;
   const loaded = UUID.test(id) ? await loadAnalysis(id) : null;
   if (!loaded) notFound();

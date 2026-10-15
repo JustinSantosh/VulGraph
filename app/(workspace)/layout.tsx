@@ -9,7 +9,7 @@ import { parseTheme, THEME_COOKIE } from "@/lib/theme";
 // active organization. No organization yet means first sign-in: /start
 // resolves one before the workspace is shown.
 export default async function WorkspaceLayout({ children }: LayoutProps<"/">) {
-  const { orgId } = await auth();
+  const { orgId } = await auth.protect();
   if (!orgId) redirect("/start");
 
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
@@ -17,7 +17,7 @@ export default async function WorkspaceLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <header className="flex h-9 shrink-0 items-center gap-3 border-b border-line bg-surface px-3">
-        <span className="font-mono text-xs font-semibold tracking-tight">cartograph</span>
+        <span className="font-mono text-xs font-semibold tracking-tight">VulGraph</span>
         <span className="text-line">/</span>
         <OrganizationSwitcher
           hidePersonal

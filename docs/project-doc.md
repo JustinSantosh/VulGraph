@@ -1,4 +1,6 @@
-# Cartograph
+# VulGraph
+
+This project is a customized derivative of [Cartograph](https://github.com/adrianhajdin/cartograph). Preserve upstream attribution when extending or distributing it.
 
 The product decisions behind this build, written before it starts, with the reasoning attached. The reasoning matters more than the decision — you'll hit forks this doesn't cover, and you'll need to know which way the thinking was leaning.
 

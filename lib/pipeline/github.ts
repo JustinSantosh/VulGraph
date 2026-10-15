@@ -56,7 +56,7 @@ export function parseRepositoryUrl(input: string): Repository {
 export async function resolveHeadCommit({ owner, name }: Repository): Promise<string> {
   const response = await withTimeout(`Asking GitHub for ${owner}/${name}'s latest commit`, API_TIMEOUT_MS, () =>
     fetch(`https://api.github.com/repos/${owner}/${name}/commits/HEAD`, {
-      headers: { Accept: "application/vnd.github.sha", "User-Agent": "cartograph" },
+      headers: { Accept: "application/vnd.github.sha", "User-Agent": "VulGraph" },
       signal: AbortSignal.timeout(API_TIMEOUT_MS),
     }),
   );
@@ -87,7 +87,7 @@ export async function fetchFileAt({ owner, name }: Repository, sha: string, file
   const encoded = filePath.split("/").map(encodeURIComponent).join("/");
   const response = await withTimeout(what, API_TIMEOUT_MS, () =>
     fetch(`https://raw.githubusercontent.com/${owner}/${name}/${sha}/${encoded}`, {
-      headers: { "User-Agent": "cartograph" },
+      headers: { "User-Agent": "VulGraph" },
       signal: AbortSignal.timeout(API_TIMEOUT_MS),
     }),
   );
@@ -104,7 +104,7 @@ export async function downloadArchive({ owner, name }: Repository, sha: string, 
   // One signal for the request and the body, so the limit is on the whole download.
   const signal = AbortSignal.timeout(ARCHIVE_TIMEOUT_MS);
   const response = await withTimeout(what, ARCHIVE_TIMEOUT_MS, () =>
-    fetch(`https://codeload.github.com/${owner}/${name}/tar.gz/${sha}`, { headers: { "User-Agent": "cartograph" }, signal }),
+    fetch(`https://codeload.github.com/${owner}/${name}/tar.gz/${sha}`, { headers: { "User-Agent": "VulGraph" }, signal }),
   );
   if (!response.ok || !response.body) {
     throw new PipelineError(`Downloading the archive for ${owner}/${name} failed: GitHub answered ${response.status}`);

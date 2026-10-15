@@ -1,0 +1,21 @@
+{
+  "name": "vulgraph-deep-agent-quickstart",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@langchain/core": "latest",
+    "@langchain/google": "^0.2.10",
+    "deepagents": "latest",
+    "dotenv": "latest",
+    "langchain": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

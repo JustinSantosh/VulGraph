@@ -15,7 +15,7 @@ export type FormState = { error: string | null };
 // already has one for the repository, goes to it without running anything.
 // The organization comes off the session token, never from the form.
 export async function submitAnalysis(_previous: FormState, form: FormData): Promise<FormState> {
-  const { orgId } = await auth();
+  const { orgId } = await auth.protect();
   if (!orgId) return { error: "No active organization" };
   const url = form.get("url");
   if (typeof url !== "string" || !url.trim()) return { error: "Paste a GitHub repository URL" };
@@ -35,6 +35,7 @@ export async function submitAnalysis(_previous: FormState, form: FormData): Prom
 
 // Re-running is only ever this: a deliberate act from the analysis itself.
 export async function rerunAnalysis(analysisId: string): Promise<FormState> {
+  await auth.protect();
   // Visibility is the policy's call: another organization's analysis isn't
   // there to re-run. The writer below bypasses policies, so this read comes first.
   const supabase = await createServerSupabase();

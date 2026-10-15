@@ -1,23 +1,12 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import { parseTheme, THEME_COOKIE } from "@/lib/theme";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Cartograph",
-  description: "Dependency maps of public GitHub repositories",
+  title: "VulGraph — Repository Intelligence",
+  description: "Map code dependencies and understand repository change impact.",
 };
 
 // Clerk's components read the same tokens as the app, so they follow the
@@ -46,7 +35,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-theme={theme}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="flex h-full flex-col">
         <ClerkProvider appearance={clerkAppearance}>{children}</ClerkProvider>

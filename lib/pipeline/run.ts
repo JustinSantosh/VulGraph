@@ -37,7 +37,7 @@ export async function continueRun(db: Db, claimed: ClaimedRun): Promise<void> {
   const { analysisId, organizationId, repository } = claimed;
   let workdir: string | null = null;
   try {
-    workdir = await mkdtemp(path.join(tmpdir(), "cartograph-"));
+    workdir = await mkdtemp(path.join(tmpdir(), "vulgraph-"));
     await enter(db, claimed, "fetch", `Resolving the latest commit of ${repository.owner}/${repository.name}`);
     const sha = await resolveHeadCommit(repository);
     await update(db, claimed, {

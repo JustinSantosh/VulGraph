@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { Activate } from "./activate";
 
 export default async function StartPage() {
-  const { orgId } = await auth();
+  const { orgId } = await auth.protect();
   if (orgId) redirect("/");
 
   return (
